@@ -68,6 +68,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if(mMessageAdapter.isSelection()) {
+            mMessageAdapter.setSelection(false);
+            mMessageAdapter.resetSelection();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.app_menu, menu);
@@ -145,6 +155,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i) {
                             case 0:
+                                mMessageAdapter.setSelection(true);
                                 break;
 
                             case 1:

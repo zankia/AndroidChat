@@ -2,37 +2,59 @@ package fr.zankia.android.chat;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private static final int TYPE_SENT = 1;
 
     private Listener mListener;
     private List<Message> mMessages;
-    private int selected = -1;
+    private boolean selection;
+    private List<Boolean> selected;
     private User user;
 
     public MessageAdapter(Listener listener, List<Message> messages, User user) {
         this.mListener = listener;
         this.mMessages = messages;
         this.user = user;
+        this.selection = false;
+        this.selected = new ArrayList<>();
+        resetSelection();
     }
 
+    public void resetSelection() {
+        selected.clear();
+        for (int i = 0; i < mMessages.size(); ++i) {
+            selected.add(false);
+        }
+    }
+
+
+    public void setSelection(boolean selection) {
+        this.selection = selection;
+        notifyDataSetChanged();
+    }
+
+    public boolean isSelection() {
+        return selection;
+    }
 
 
     public void setData(List<Message> messages) {
         this.mMessages = messages;
+        resetSelection();
         this.notifyDataSetChanged();
     }
 
@@ -48,7 +70,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setData(mMessages.get(position), position == selected);
+        holder.setData(mMessages.get(position), selection, selected.get(position));
     }
 
     @Override
@@ -62,6 +84,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
+        private CheckBox checkBox;
         private TextView nickname, message;
         private ImageView image;
         private RelativeTimeTextView timestamp;
@@ -75,9 +98,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             this.message = itemView.findViewById(R.id.message);
             this.timestamp = itemView.findViewById(R.id.timestamp);
             this.image = itemView.findViewById(R.id.userImage);
+            this.checkBox = itemView.findViewById(R.id.checkBox);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    selected.set(getAdapterPosition(), b);
+                }
+            });
         }
 
-        public void setData(Message m, boolean selected) {
+        public void setData(Message m, boolean selection, boolean selected) {
+            checkBox.setVisibility(selection ? View.VISIBLE : View.GONE);
+            checkBox.setChecked(selected);
             Context context = image.getContext();
             Glide
                 .with(context)
@@ -99,7 +131,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
-            selected = getAdapterPosition();
+            selected.set(getAdapterPosition(), !checkBox.isChecked());
             notifyDataSetChanged();
         }
     }
