@@ -2,8 +2,15 @@
     <string name="app_name">AndroidChat</string>
     <string name="gravatarURI" translatable="false">https://www.gravatar.com/avatar/</string>
     <string name="firebase_path" translatable="false">chat/messages</string>
-    <string name="send">Envoyer</string>
-    <string name="name_picker">Choisissez vos identifiants</string>
-    <string name="continuer">Continuer</string>
-    <string name="logout">Se déconnecter</string>
+    <string name="send">Send</string>
+    <string name="name_picker">Choose your name and email</string>
+    <string name="continuer">Continue</string>
+    <string name="logout">Logout</string>
+    <string name="actions">Actions</string>
+    <string name="details">Details</string>
+    <string name="username">Username</string>
+    <string name="userEmail">Email</string>
+    <string name="date">Date</string>
+    <string name="select">Select</string>
+    <string name="delete">Delete</string>
 </resources>

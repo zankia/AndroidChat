@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidChat</string>
+    <string name="send">Envoyer</string>
+    <string name="name_picker">Choisissez vos identifiants</string>
+    <string name="continuer">Continuer</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="actions">Actions</string>
+    <string name="details">Détails</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="userEmail">Email</string>
+    <string name="date">Date</string>
+    <string name="select">Sélectionner</string>
+    <string name="delete">Supprimer</string>
+</resources>

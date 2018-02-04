@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
@@ -10,12 +10,14 @@
     android:paddingTop="4dp"
     android:clipToPadding="false">
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="center"
+        card_view:cardBackgroundColor="@android:color/holo_green_light"
         card_view:cardCornerRadius="4dp"
         card_view:contentPadding="12dp">
 
@@ -29,8 +31,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
-                android:background="@color/cardview_light_background"/>
+                android:layout_marginRight="12dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
                     android:id="@+id/message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="content"/>
+                    tools:text="content" />
 
                 <com.github.curioustechizen.ago.RelativeTimeTextView
                     android:id="@+id/timestamp"
@@ -63,4 +64,4 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-</FrameLayout>
+</RelativeLayout>

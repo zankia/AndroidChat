@@ -2,6 +2,7 @@ package fr.zankia.android.chat;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,20 @@ import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+    private static final int TYPE_SENT = 1;
+
     private Listener mListener;
     private List<Message> mMessages;
     private int selected = -1;
+    private User user;
 
-    public MessageAdapter(Listener listener, List<Message> messages) {
+    public MessageAdapter(Listener listener, List<Message> messages, User user) {
         this.mListener = listener;
         this.mMessages = messages;
+        this.user = user;
     }
 
 
@@ -33,7 +39,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.row_message,
+                viewType == TYPE_SENT ? R.layout.row_message_sent : R.layout.row_message_received,
                 parent,
                 false
         );
@@ -48,6 +54,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public int getItemCount() {
         return mMessages.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mMessages.get(position).getUserEmail().equals(user.getEmail()) ? TYPE_SENT : 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
@@ -67,9 +78,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
 
         public void setData(Message m, boolean selected) {
-            itemView.findViewById(R.id.card_view).setBackgroundResource(
-                    selected ? R.color.colorSelected : R.color.cardview_light_background
-            );
             Context context = image.getContext();
             Glide
                 .with(context)
@@ -82,7 +90,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         @Override
         public boolean onLongClick(View view) {
-            mListener.onItemClick(
+            mListener.onItemLongClick(
                     getAdapterPosition(),
                     mMessages.get(getAdapterPosition())
             );
@@ -97,6 +105,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public interface Listener {
-        void onItemClick(int position, Message message);
+        void onItemLongClick(int position, Message message);
     }
 }
