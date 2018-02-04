@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AndroidChat</string>
+    <string name="gravatarURI" translatable="false">https://www.gravatar.com/avatar/</string>
+    <string name="firebase_path" translatable="false">chat/messages</string>
+    <string name="send">Envoyer</string>
+    <string name="name_picker">Choisissez vos identifiants</string>
+    <string name="continuer">Continuer</string>
+    <string name="logout">Se déconnecter</string>
+</resources>
